@@ -1,4 +1,9 @@
-﻿namespace FastFood_Mar;
+﻿using FastFood_Mar.Context;
+using FastFood_Mar.Repositories;
+using FastFood_Mar.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
+namespace FastFood_Mar;
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -11,6 +16,18 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+        var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
+
+        // Conector para o SQLServer
+        //services.AddDbContext<AppDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+        //Conector para o MySql
+        services.AddDbContext<AppDBContext>(options => 
+                options.UseMySql(Configuration.GetConnectionString("MySQLConnection"), serverVersion));
+
+        services.AddTransient<ILancheRepository, LancheRepository>();
+        services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+
         services.AddControllersWithViews();
     }
 
