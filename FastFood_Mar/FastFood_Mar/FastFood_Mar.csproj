@@ -28,4 +28,7 @@
   <ItemGroup>
     <Folder Include="Context\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\images\favicon-32x32.png" />
+  </ItemGroup>
 </Project>
