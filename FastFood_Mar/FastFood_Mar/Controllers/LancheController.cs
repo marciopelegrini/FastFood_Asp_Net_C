@@ -16,39 +16,47 @@ namespace FastFood_Mar.Controllers
 
         public IActionResult List(string categoria)
         {
-            IEnumerable<Lanche> Lanches;
+            IEnumerable<Lanche> lanches;
             string categoriaAtual = string.Empty;
 
             if (string.IsNullOrEmpty(categoria))
             {
-                Lanches = _lancheRepository.Lanches.OrderBy(l => l.LancheId);
+                lanches = _lancheRepository.Lanches.OrderBy(l => l.LancheId);
                 categoriaAtual = "Todos os lanches";
             }
             else
             {
-                if (string.Equals("Normal", categoria, StringComparison.OrdinalIgnoreCase))
-                {
-                    Lanches = _lancheRepository.Lanches
-                        .Where(l => l.Categoria.CategoriaNome.Equals("Normal"))
-                        .OrderBy(l => l.Nome);
-                }
-                else
-                {
-                    Lanches = _lancheRepository.Lanches
-                        .Where(l => l.Categoria.CategoriaNome.Equals("Natural"))
-                        .OrderBy(l => l.Nome);
-                }
+                //if (string.Equals("Normal", categoria, StringComparison.OrdinalIgnoreCase))
+                //{
+                //    lanches = _lancheRepository.Lanches
+                //        .Where(l => l.Categoria.CategoriaNome.Equals("Normal"))
+                //        .OrderBy(l => l.Nome);
+                //}
+                //else
+                //{
+                //    lanches = _lancheRepository.Lanches
+                //       .Where(l => l.Categoria.CategoriaNome.Equals("Natural"))
+                //       .OrderBy(l => l.Nome);
+                //}
+                lanches = _lancheRepository.Lanches
+                          .Where(l => l.Categoria.CategoriaNome.Equals(categoria))
+                          .OrderBy(c => c.Nome);
+
                 categoriaAtual = categoria;
             }
 
             var lanchesListViewModel = new LancheListViewModel
             {
-                Lanches = Lanches,
+                Lanches = lanches,
                 CategoriaAtual = categoriaAtual
             };
 
-
             return View(lanchesListViewModel);
+        }
+        public IActionResult Details(int lancheId)
+        {
+            var lanche = _lancheRepository.Lanches.FirstOrDefault(l => l.LancheId == lancheId);
+            return View(lanche);
         }
     }
 }
