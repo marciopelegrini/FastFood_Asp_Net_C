@@ -7,9 +7,9 @@ namespace FastFood_Mar.Models
 {
     public class CarrinhoCompra
     {
-        private readonly AppDBContext _context;
+        private readonly AppDbContext _context;
 
-        public CarrinhoCompra(AppDBContext context)
+        public CarrinhoCompra(AppDbContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace FastFood_Mar.Models
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
 
             //obtem um serviço do tipo do nosso contexto 
-            var context = services.GetService<AppDBContext>();
+            var context = services.GetService<AppDbContext>();
 
             //obtem ou gera o Id do carrinho
             string carrinhoId = session.GetString("CarrinhoId") ?? Guid.NewGuid().ToString();

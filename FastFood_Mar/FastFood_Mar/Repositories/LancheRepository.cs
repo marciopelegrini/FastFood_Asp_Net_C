@@ -7,8 +7,8 @@ namespace FastFood_Mar.Repositories
 {
     public class LancheRepository : ILancheRepository
     {
-        private readonly AppDBContext _context;
-        public LancheRepository(AppDBContext contexto)
+        private readonly AppDbContext _context;
+        public LancheRepository(AppDbContext contexto)
         {
             _context = contexto;
         }
