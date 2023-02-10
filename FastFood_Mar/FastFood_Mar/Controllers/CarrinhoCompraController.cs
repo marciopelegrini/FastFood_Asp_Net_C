@@ -1,6 +1,7 @@
 using FastFood_Mar.Models;
 using FastFood_Mar.Repositories.Interfaces;
 using FastFood_Mar.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FastFood_Mar.Controllers
@@ -30,6 +31,7 @@ namespace FastFood_Mar.Controllers
             return View(carrinhoCompraVM);
         }
 
+        [Authorize]
         public IActionResult AdicionarItemNoCarrinhoCompra(int lancheId)
         {
             var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(p => p.LancheId == lancheId);
@@ -41,6 +43,7 @@ namespace FastFood_Mar.Controllers
             return RedirectToAction("index");
         }
 
+        [Authorize]
         public IActionResult RemoverItemNoCarrinhoCompra(int lancheId)
         {
             var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(p => p.LancheId == lancheId);

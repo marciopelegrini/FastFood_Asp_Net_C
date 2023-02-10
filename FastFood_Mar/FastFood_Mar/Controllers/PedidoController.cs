@@ -1,5 +1,6 @@
 using FastFood_Mar.Models;
 using FastFood_Mar.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FastFood_Mar.Controllers
@@ -15,12 +16,14 @@ namespace FastFood_Mar.Controllers
             _carrinhoCompra = carrinhoCompra;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Checkout()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Checkout(Pedido pedido)
         {
