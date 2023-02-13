@@ -34,6 +34,9 @@ public class Startup
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 
+        services.ConfigureApplicationCookie(options => options.AccessDeniedPath = "/Home/AccessDenied");
+        services.Configure<ConfigurationImagens>(Configuration.GetSection("ConfigurationPastaImagens"));
+
         services.Configure<IdentityOptions>(options =>
         {
             // Default Password settings.
