@@ -1,10 +1,12 @@
-﻿using FastFood_Mar.Context;
+﻿using FastFood_Mar.Areas.Admin.Servicos;
+using FastFood_Mar.Context;
 using FastFood_Mar.Models;
 using FastFood_Mar.Repositories;
 using FastFood_Mar.Repositories.Interfaces;
 using FastFood_Mar.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 
 namespace FastFood_Mar;
 public class Startup
@@ -47,6 +49,7 @@ public class Startup
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
         services.AddTransient<IPedidoRepository, PedidoRepository>();
         services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
+        services.AddScoped<RelatorioVendasService>();
 
         services.AddAuthorization(options =>
         {
@@ -61,6 +64,11 @@ public class Startup
         services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
 
         services.AddControllersWithViews();
+        services.AddPaging(options =>
+        {
+            options.ViewName = "Bootstrap4";
+            options.PageParameterName = "pageindex";
+        });
         services.AddMemoryCache();
         services.AddSession();
 
