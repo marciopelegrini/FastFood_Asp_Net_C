@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FastFood_Mar.Context;
 using FastFood_Mar.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace FastFood_Mar.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminLanchesController : Controller
     {
         private readonly AppDbContext _context;
@@ -156,14 +155,14 @@ namespace FastFood_Mar.Areas.Admin.Controllers
             {
                 _context.Lanches.Remove(lanche);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool LancheExists(int id)
         {
-          return _context.Lanches.Any(e => e.LancheId == id);
+            return _context.Lanches.Any(e => e.LancheId == id);
         }
     }
 }

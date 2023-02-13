@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FastFood_Mar.Context;
 using FastFood_Mar.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace FastFood_Mar.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminPedidosController : Controller
     {
         private readonly AppDbContext _context;
@@ -23,7 +21,7 @@ namespace FastFood_Mar.Areas.Admin.Controllers
         // GET: Admin/AdminPedidos
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Pedidos.ToListAsync());
+            return View(await _context.Pedidos.ToListAsync());
         }
 
         // GET: Admin/AdminPedidos/Details/5
@@ -149,14 +147,14 @@ namespace FastFood_Mar.Areas.Admin.Controllers
             {
                 _context.Pedidos.Remove(pedido);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PedidoExists(int id)
         {
-          return _context.Pedidos.Any(e => e.PedidoId == id);
+            return _context.Pedidos.Any(e => e.PedidoId == id);
         }
     }
 }

@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FastFood_Mar.Context;
 using FastFood_Mar.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FastFood_Mar.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminCategoriasController : Controller
     {
         private readonly AppDbContext _context;
@@ -23,7 +25,7 @@ namespace FastFood_Mar.Areas.Admin.Controllers
         // GET: Admin/AdminCategorias
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Categorias.ToListAsync());
+            return View(await _context.Categorias.ToListAsync());
         }
 
         // GET: Admin/AdminCategorias/Details/5
@@ -149,14 +151,14 @@ namespace FastFood_Mar.Areas.Admin.Controllers
             {
                 _context.Categorias.Remove(categoria);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CategoriaExists(int id)
         {
-          return _context.Categorias.Any(e => e.CategoriaId == id);
+            return _context.Categorias.Any(e => e.CategoriaId == id);
         }
     }
 }
