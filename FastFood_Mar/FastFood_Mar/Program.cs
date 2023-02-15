@@ -6,7 +6,6 @@ using FastFood_Mar.Repositories;
 using FastFood_Mar.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Configuration;
 using ReflectionIT.Mvc.Paging;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,9 +19,9 @@ var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
 var connection = builder.Configuration.GetConnectionString("MySQLConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connection, serverVersion));
 
-//Conector para SQLite
+////Conector para SQLite
 //var connection = builder.Configuration.GetConnectionString("SQLiteConnection");
-//builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connection));
+//builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(connection));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
